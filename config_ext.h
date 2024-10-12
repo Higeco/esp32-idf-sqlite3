@@ -2,9 +2,8 @@
 #define SQLITE_CORE                          1
 #define SQLITE_NO_SYNC                       1
 #define YYSTACKDEPTH                        20
-#define SQLITE_TEMP_STORE                    1
+#define SQLITE_TEMP_STORE                    3 // 1 => 3 only use memory
 #define SQLITE_SYSTEM_MALLOC                 1
-#define SQLITE_OS_OTHER                      1
 #define SQLITE_THREADSAFE                    0
 #define SQLITE_MUTEX_APPDEF                  1
 #define SQLITE_SECURE_DELETE                 0
@@ -37,12 +36,9 @@
 #define SQLITE_OMIT_AUTOVACUUM               1
 #undef SQLITE_OMIT_BETWEEN_OPTIMIZATION
 #define SQLITE_OMIT_BLOB_LITERAL             1
-#define SQLITE_OMIT_BTREECOUNT               1
-#define SQLITE_OMIT_BUILTIN_TEST             1
-#define SQLITE_OMIT_CAST                     1
+#define SQLITE_UNTESTABLE                    1
 #define SQLITE_OMIT_CHECK                    1
 #define SQLITE_OMIT_COMPILEOPTION_DIAGS      1
-#define SQLITE_OMIT_COMPOUND_SELECT          1
 #define SQLITE_OMIT_CONFLICT_CLAUSE          1
 #undef SQLITE_OMIT_CTE
 #define SQLITE_OMIT_DECLTYPE                 1
@@ -73,17 +69,30 @@
 #define SQLITE_OMIT_TEMPDB                   1
 #define SQLITE_OMIT_TRACE                    1
 #undef SQLITE_OMIT_TRIGGER
-#define SQLITE_OMIT_TRUNCATE_OPTIMIZATION    1
 #define SQLITE_OMIT_UTF16                    1
 #undef SQLITE_OMIT_VACUUM
 #undef SQLITE_OMIT_VIEW
 #undef SQLITE_OMIT_VIRTUALTABLE
-#define SQLITE_OMIT_WAL                      1
 #undef SQLITE_OMIT_WSD
 #define SQLITE_OMIT_XFER_OPT                 1
-#define SQLITE_PERFORMANCE_TRACE             1
 /* #define SQLITE_OMIT_COMPLETE              1 */
 /* #define SQLITE_OMIT_SUBQUERY              1 */
 /* #define SQLITE_OMIT_DATETIME_FUNCS        1 */
 /* #define SQLITE_OMIT_FLOATING_POINT        1 */
-#define SQLITE_COUNTOFVIEW_OPTIMIZATION      0
+
+#define SQLITE_OMIT_JSON                     1
+#define SQLITE_OMIT_INTROSPECTION_PRAGMAS    1
+#define SQLITE_OMIT_COMPLETE                 1
+#define SQLITE_OMIT_DESERIALIZE              1
+#define SQLITE_DISABLE_PAGECACHE_OVERFLOW_STATS 1
+#define SQLITE_ENABLE_NULL_TRIM              1
+#define SQLITE_DQS                           0
+#define SQLITE_DEFAULT_SYNCHRONOUS           2
+
+// ESP32 Specific configuration for SQLite.
+// Under an ARCHDEFINE to be able to compile
+// on different archs (unix) to make testing easier.
+#ifdef ESP32
+  #define SQLITE_OS_OTHER                    1
+  #define SQLITE_OMIT_WAL                    1
+#endif // ESP32
