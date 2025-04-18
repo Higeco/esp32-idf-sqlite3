@@ -27,7 +27,7 @@
 
 #undef dbg_printf
 //#define dbg_printf(...) printf(__VA_ARGS__)
-#define dbg_printf(...) 
+#define dbg_printf(...)
 #define CACHEBLOCKSZ    4096
 #define MAX_FNAME_LEN     32
 
@@ -50,15 +50,6 @@ int esp32_CurrentTime(sqlite3_vfs*, double*);
 int esp32mem_Read(sqlite3_file*, void*, int, sqlite3_int64);
 int esp32mem_Write(sqlite3_file*, const void*, int, sqlite3_int64);
 int esp32mem_Sync(sqlite3_file*, int);
-
-/**
- * @important  This is just a dummy function call that does
- *             nothing at all always returning SQLITE_OK
- */
-int dummy_sqlite_call(sqlite3_file *id, ...) {
-  dbg_printf("dummy_sqlite_call:\n");
-  return SQLITE_OK;
-}
 
 #ifdef DEBUG_IO_STATS
 #include <esp_timer.h>
@@ -187,10 +178,10 @@ const sqlite3_io_methods esp32IoMethods = {
   .xTruncate                = esp32_Truncate,
 
   // Dummy calls
-  .xLock                    = dummy_sqlite_call,
-  .xUnlock                  = dummy_sqlite_call,
-  .xCheckReservedLock       = dummy_sqlite_call,
-  .xFileControl             = dummy_sqlite_call,
+  .xLock                    = NULL,
+  .xUnlock                  = NULL,
+  .xCheckReservedLock       = NULL,
+  .xFileControl             = NULL,
 };
 
 const sqlite3_io_methods esp32MemMethods = {
@@ -208,12 +199,12 @@ const sqlite3_io_methods esp32MemMethods = {
   .xDeviceCharacteristics   = esp32_DeviceCharacteristics,
 
   // Dummy calls
-  .xSync                    = dummy_sqlite_call,
-  .xTruncate                = dummy_sqlite_call,
-  .xLock                    = dummy_sqlite_call,
-  .xUnlock                  = dummy_sqlite_call,
-  .xCheckReservedLock       = dummy_sqlite_call,
-  .xFileControl             = dummy_sqlite_call,
+  .xSync                    = NULL,
+  .xTruncate                = NULL,
+  .xLock                    = NULL,
+  .xUnlock                  = NULL,
+  .xCheckReservedLock       = NULL,
+  .xFileControl             = NULL,
 };
 
 uint32_t linkedlist_store (linkedlist_t **leaf, uint32_t offset, uint32_t len, const uint8_t *data) {
